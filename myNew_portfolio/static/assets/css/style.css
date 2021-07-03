@@ -532,6 +532,7 @@ section {
   box-shadow: none;
 }
 
+
 .progress.active .progress-bar, .progress-bar.active {
   -webkit-animation: progress-bar-stripes 2s linear infinite;
   -o-animation: progress-bar-stripes 2s linear infinite;
