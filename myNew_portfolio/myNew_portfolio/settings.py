@@ -125,7 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-    # BASE_DIR / 'dashboard' / 'static',
+    BASE_DIR / 'main' / 'static'
 ]
 
 MEDIA_URL = '/media/'

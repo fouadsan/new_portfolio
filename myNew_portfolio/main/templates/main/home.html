@@ -1,0 +1,573 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+<script src="{% static 'main/main.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block title %}
+Portfolio
+{% endblock title %}
+
+{% block content %}
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex flex-wrap justify-content-center">
+    <div class="d-flex flex-column justify-content-center">
+        <div class="container" data-aos="zoom-in" data-aos-delay="100">
+            <h1>{{ profile.full_name }}</h1>
+            <p>I'm a <span class="typed"
+                    data-typed-items="Web Developer, Mobile Developer, Cyber Security Engineer"></span>
+            </p>
+            <div class="social-links">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                <a href="{{ profile.cv.url }}" target="_blank">
+                    <button class="submit-btn" type="button" data-aos="fade-left">View Cv</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img src="{% static 'assets/img/hero-bg.png' %}" alt="">
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+    <div class="d-flex flex-wrap justify-content-center">
+        <!-- ======= About Section ======= -->
+        <section id="about" class="col-lg-4 about">
+            <div class="container" data-aos="fade-right">
+
+                <div class="section-title">
+                    <h2>About</h2>
+                </div>
+                <div class="d-flex flex-wrap justify-content-center">
+                    <div class="a-box">
+                        <div class="img-container">
+                            <div class="img-inner">
+                                <div class="inner-skew">
+                                    <img src="{{ profile.picture.url }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-container">
+                            <h3>Personal Informations:</h3>
+                            <div class="alert alert-secondary">
+                                <p><b>{{ profile.about_me }}</b>
+                                </p>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li><strong>Birthday:</strong> <span>{{ profile.birthday }}</span></li>
+                                    <li><strong>Phone:</strong> <span>{{ profile.phone }}</span>&nbsp;
+                                        <a href="tel:+213-5-61-58-77-80">
+                                            <i class="bi bi-phone"></i>
+                                        </a>
+                                    </li>
+                                    <li><strong>Email:</strong>
+                                        <span>{{ profile.email }}</span>&nbsp;
+                                        <a href="mailto: f.benayad95@gmail.com">
+                                            <i class="bi bi-envelope"></i>
+                                        </a>
+                                    </li>
+                                    <li><strong>Address:</strong>
+                                        <span>{{ profile.address }}</span>
+                                    </li>
+                                    <li><strong>Education Degree:</strong> <span>{{ profile.education_degree }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </section><!-- End About Section -->
+        <div class="col-lg-1"></div>
+        <!-- ======= Skills Section ======= -->
+        <section id="skills" class="col-lg-6 align-self-center skills section-bg">
+            <div class="container" data-aos="fade-left">
+                <div class="section-title">
+                    <h2>Skills</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 align-self-center">
+                        {% for skill in skills %}
+                        {% if skill.is_field %}
+                        <div class="col-md-3 col-sm-6 col-xs-12 text-center">
+                            <div class="chart" data-percent="{{ skill.percentage }}">
+                                <span>
+                                    <strong>{{ skill.name }}</strong>{{ skill.percentage }}%
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {% for skill in skills %}
+                        {% if not skill.is_field %}
+                        <div class="progress-wrap">
+                            <h3><span class="name-left">{{ skill.name }}</span>
+                                <span class="value-right">{{ skill.percentage }}%</span>
+                            </h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-1 progress-bar-striped active" role="progressbar"
+                                    aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                                    style="width:{{ skill.percentage }}%; background-color: {{ skill.color }};">
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Skills Section -->
+    </div>
+
+
+    <!-- ======= Resume Section ======= -->
+    <section id="resume" class="resume">
+        <div class="container" data-aos="fade-right">
+
+            <div class="section-title">
+                <h2>Resume</h2>
+                <div class="alert alert-secondary">
+                    <p><b>Experience</b></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="resume-title">Education</h3>
+                    {% for education in educations %}
+                    <div class="resume-item">
+                        <h4>{{ education.title }}</h4>
+                        <h5>{{ education.start_date|date:"o" }}-{{ education.end_date|date:"o" }}</h5>
+                        <p><em>{{ education.place }}</em></p>
+                        {% if education.description %}
+                        <p>{{ education.description }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="resume-title">Professional Experience</h3>
+                    {% for experience in experiences %}
+                    <div class="resume-item">
+                        <h4>{{ experience.title }}</h4>
+                        {% if experience.end_date %}
+                        <h5>{{ experience.start_date|date:"F,o" }} - {{ experience.end_date|date:"F,o" }}</h5>
+                        {% else %}
+                        <h5>{{ experience.start_date|date:"F" }}-Present</h5>
+                        {% endif %}
+                        <p><em>{{ experience.place }} </em></p>
+                        {% if experience.description %}
+                        <ul>
+                            <li>{{ experience.description }}</li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Resume Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Services</h2>
+                <p class="alert alert-success"><b>Always available as a freelancer.</b></p>
+            </div>
+            <div class="row mt-5">
+                <div class="col-lg-4">
+                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="icon">
+                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="right-content">
+                                    <h4>Similar Websites</h4>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        dormque laudantium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.4s">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="icon">
+                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="right-content">
+                                    <h4>Website Trends</h4>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        dormque laudantium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="icon">
+                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="right-content">
+                                    <h4>Traffic Analysis</h4>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        dormque laudantium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.6s">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="icon">
+                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="right-content">
+                                    <h4>Optimizing Keywords</h4>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        dormque laudantium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.7s">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="icon">
+                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="right-content">
+                                    <h4>Page Optimizations</h4>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        dormque laudantium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.8s">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="icon">
+                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="right-content">
+                                    <h4>Deep URL Analysis</h4>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        dormque laudantium.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Portfolio</h2>
+                <div class="alert alert-secondary">
+                    <p><b>Recently done projects.</b></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active">All</li>
+                        <li data-filter=".filter-app">App</li>
+                        <li data-filter=".filter-card">Card</li>
+                        <li data-filter=".filter-web">Web</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-1.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>App 1</h4>
+                            <p>App</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-1.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Web 3</h4>
+                            <p>Web</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>App 2</h4>
+                            <p>App</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Card 2</h4>
+                            <p>Card</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-5.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Web 2</h4>
+                            <p>Web</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-5.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-6.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>App 3</h4>
+                            <p>App</p>
+                            <div class="portfolio-links">
+                                <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery"
+                                    class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-7.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Card 1</h4>
+                            <p>Card</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-7.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-8.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Card 3</h4>
+                            <p>Card</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-8.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+                    <div class="portfolio-wrap">
+                        <img src="{% static 'assets/img/portfolio/portfolio-9.jpg' %}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Web 3</h4>
+                            <p>Web</p>
+                            <div class="portfolio-links">
+                                <a href="{% static 'assets/img/portfolio/portfolio-9.jpg' %}"
+                                    data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i
+                                        class="bx bx-plus"></i></a>
+                                <a href="portfolio-details.html" class="portfolio-details-lightbox"
+                                    data-glightbox="type: external" title="Portfolio Details"><i
+                                        class="bx bx-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- End Portfolio Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Contact</h2>
+                <div class="alert alert-success">
+                    <p><b>Get In Touch !!!</b></p>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+
+                <div class="col-lg-4">
+                    <div class="info">
+                        <div class="address">
+                            <i class="bi bi-geo-alt"></i>
+                            <h4>Location:</h4>
+                            <p>El-Eulma, Setif, Algeria</p>
+                        </div>
+
+                        <div class="email">
+                            <i class="bi bi-envelope"></i>
+                            <h4>Email:</h4>
+                            <p>fafopalermo@gmail.com</p>
+                        </div>
+
+                        <div class="phone">
+                            <i class="bi bi-phone"></i>
+                            <h4>Call:</h4>
+                            <p>+213 561 587 780</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8 mt-5 mt-lg-0">
+
+                    <form id="send-email-form" autocomplete="off">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name-input"
+                                    placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <input type="email" class="form-control" name="email" id="email-input"
+                                    placeholder="Your Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="text" class="form-control" name="subject" id="subject-input"
+                                placeholder="Subject" required>
+                        </div>
+                        <div class="form-group mt-3">
+                            <textarea class="form-control" name="message" id="message-input" rows="5"
+                                placeholder="Message" required></textarea>
+                        </div>
+
+                        <div class="d-flex flex-wrap justify-content-center my-3">
+                            <div id="spinner-box" class="spinner-border text-danger not-visible">
+                                <div class="sr-only" role="status"></div>
+                            </div>
+                            <div id="send-box" class="text-center">
+                                <button class="submit-btn" type="submit"><span>Send Message</span></button>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+{% endblock content %}
