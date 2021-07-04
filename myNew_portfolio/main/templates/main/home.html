@@ -163,7 +163,9 @@ Portfolio
                         {% else %}
                         <h5>{{ experience.start_date|date:"F" }}-Present</h5>
                         {% endif %}
+                        {% if experience.place %}
                         <p><em>{{ experience.place }} </em></p>
+                        {% endif %}
                         {% if experience.description %}
                         <ul>
                             <li>{{ experience.description }}</li>
@@ -184,115 +186,26 @@ Portfolio
                 <h2>Services</h2>
                 <p class="alert alert-success"><b>Always available as a freelancer.</b></p>
             </div>
-            <div class="row mt-5">
-                <div class="col-lg-4">
-                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.3s">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="icon">
-                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="right-content">
-                                    <h4>Similar Websites</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        dormque laudantium.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
+            <div class="row justify-content-center mt-5">
+                {% for service in services %}
+                <div class="col-md-5">
                     <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.4s">
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-lg-12">
                                 <div class="icon">
-                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
+                                    <img src="{{ service.image.url }}" alt="Service Icon">
                                 </div>
                             </div>
-                            <div class="col-lg-8">
+                            <div class="col-lg-12 mt-3">
                                 <div class="right-content">
-                                    <h4>Website Trends</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        dormque laudantium.</p>
+                                    <h4>{{ service.name }}</h4>
+                                    <p>{{ service.description }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="icon">
-                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="right-content">
-                                    <h4>Traffic Analysis</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        dormque laudantium.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.6s">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="icon">
-                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="right-content">
-                                    <h4>Optimizing Keywords</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        dormque laudantium.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.7s">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="icon">
-                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="right-content">
-                                    <h4>Page Optimizations</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        dormque laudantium.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="service-item" data-aos="zoom-in" data-wow-duration="1s" data-wow-delay="0.8s">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="icon">
-                                    <img src="{% static 'assets/img/web-development.png' %}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="right-content">
-                                    <h4>Deep URL Analysis</h4>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        dormque laudantium.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
 
         </div>
