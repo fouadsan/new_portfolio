@@ -8,6 +8,11 @@ urlpatterns = [
     path('', include('main.urls'))
 ]
 
+
+handler404 = "main.views.handle_404"
+handler500 = "main.views.handle_500"
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,11 @@
+<div id="notfound">
+    <div class="notfound">
+        <div>
+            <div class="notfound-404">
+                <h1>!</h1>
+            </div>
+            <h2>Error<br>{{ status_code }}</h2>
+        </div>
+        <p>{{ error_message }}<a href="{% url 'main:home' %}">Back to homepage</a></p>
+    </div>
+</div>

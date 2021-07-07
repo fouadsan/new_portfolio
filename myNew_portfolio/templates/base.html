@@ -71,11 +71,13 @@
         <div class="container">
             <h3>Fouad Benayad</h3>
             <p>Software Developer & Cyber Security Engineer.</p>
+            {% if social %}
             <div class="social-links">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                <a href="{{ social.my_linkedin }}" class="linkedin" target="_blank"><i class="bx bxl-linkedin"></i></a>
+                <a href="{{ social.my_facebook }}" class="facebook" target="_blank"><i class="bx bxl-facebook"></i></a>
+                <a href="{{ social.my_twitter }}" class="twitter" target="_blank"><i class="bx bxl-twitter"></i></a>
             </div>
+            {% endif %}
             <div id="copyright-el" class="copyright"></div>
             <div class="credits">
                 Developped by <a href="">Fouad Benayad</a>

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.core.mail import BadHeaderError
 
-from .models import Profile, Skill, Education, Experience, Service, Project
+from .models import Profile, Skill, Education, Experience, Service, Project, Social
 from .forms import ContactMe
 
 
@@ -14,6 +14,7 @@ def home(request):
     experiences = Experience.objects.all()
     services = Service.objects.all()
     projects = Project.objects.all()
+    social = Social.objects.first()
     form = ContactMe(request.POST or None)
 
     context = {
@@ -23,6 +24,7 @@ def home(request):
         'experiences': experiences,
         'services': services,
         'projects': projects,
+        'social': social,
         'form': form
     }
 
@@ -57,3 +59,19 @@ def contact(request):
                 'type': 'error',
                 'confirmation': 'true'
             })
+
+
+def handle_404(request, exception):
+    data = {
+        'status_code': "404",
+        'error_message': "The link you followed may be broken, or the page may have been removed."
+    }
+    return render(request, 'error_handler.html', data)
+
+
+def handle_500(request):
+    data = {
+        'status_code': "500",
+        'error_message': "Server Error, Something went wrong."
+    }
+    return render(request, 'error_handler.html', data)

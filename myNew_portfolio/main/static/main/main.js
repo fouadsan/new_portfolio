@@ -12,6 +12,16 @@ const messageInput = document.getElementById('message-input')
 const sendBox = document.getElementById('send-box')
 const spinnerBox = document.getElementById('spinner-box')
 
+const welcomeGuest = () => {
+    navbarEl.classList.add('not-visible')
+    if (localStorage.getItem('visited')) {
+        welcomeAlert('<p style="color:#fff;">Happy to see again my friend 😀, Please remeber that you can always contact me if you need something!!<p>', 600, '3em', '#343A40', 'rgba(52, 58, 64, 0.6)')
+    } else {
+        welcomeAlert('<p style="color:#fff;">Welcome to my Portfolio. Please feel free to contact me if you need something!! 👍<p>', 600, '3em', '#343A40', 'rgba(52, 58, 64, 0.6)')
+        localStorage.setItem('visited', true)
+    }
+}
+
 const getCookie = (name) => {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -28,6 +38,7 @@ const getCookie = (name) => {
     return cookieValue;
 }
 const csrftoken = getCookie('csrftoken');
+
 
 const sendEmail = () => {
     $.ajax({
@@ -69,3 +80,5 @@ sendEmailForm.addEventListener('submit', e => {
     e.preventDefault()
     sendEmail()
 })
+
+window.addEventListener('load', welcomeGuest())
