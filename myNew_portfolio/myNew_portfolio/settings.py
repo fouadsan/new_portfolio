@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7)s+sz901uf8=u7s_l&vv&i8=cecla4m+=@9mf1oc%=&qik^qv'
+SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -121,11 +121,11 @@ USE_TZ = True
 
 
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    os.path.join(BASE_DIR, 'new-portfolio-318913-6ae92d4b7b5f.json')
+    os.path.join(BASE_DIR, 'JSON FILE FROM GCP')
 )
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_BUCKET_NAME = 'my_portfolio_images'
-GS_DEFAULT_ACL = 'publicRead'
+GS_BUCKET_NAME = 'GS_BUCKET_NAME'
+GS_DEFAULT_ACL = 'GS_DEFAULT_ACL'
 GS_FILE_OVERWRITE = 'True'
 
 # Static files (CSS, JavaScript, Images)
