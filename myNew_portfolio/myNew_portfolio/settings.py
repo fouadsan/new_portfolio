@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     # Our own apps,
     'main',
 
-    # Our own apps,
+    # Third party apps,
 ]
 
 MIDDLEWARE = [
